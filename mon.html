@@ -58,17 +58,23 @@
 
   /* Navbar */
   .navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 70px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 40px;
-    z-index: 10;
-  }
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  z-index: 50; /* make sure it's on top of everything */
+  background: rgba(0,0,0,0); /* fully transparent initially */
+  transition: background 0.3s ease;
+}
+
+.navbar.scrolled {
+  background: rgba(0,0,0,0.95); /* very dark black with slight transparency */
+}
 
   .navbar .title {
     color: white;
@@ -259,6 +265,7 @@
     gap: 6px;
     margin-bottom: 16px;
   }
+  
 
   .section2 .highlight {
     background-color: #ffd9d2;
@@ -303,13 +310,13 @@
 <div class="navbar">
   <div class="title">Pot Title</div>
   <div class="menu">
-    <button>Monasteries</button>
-    <button>Virtual Tour</button>
-    <button>Maps</button>
-    <button>Archives</button>
-    <button>Calendar</button>
-    <button>Audio Guide</button>
-  </div>
+  <button onclick="document.getElementById('sanctuaries').scrollIntoView({behavior:'smooth'})">Monasteries</button>
+  <button onclick="document.getElementById('video-section').scrollIntoView({behavior:'smooth'})">Virtual Tour</button>
+  <button onclick="document.getElementById('map').scrollIntoView({behavior:'smooth'})">Maps</button>
+  <button onclick="document.getElementById('digital-preservation').scrollIntoView({behavior:'smooth'})">Archives</button>
+  <button onclick="document.getElementById('calendar').scrollIntoView({behavior:'smooth'})">Calendar</button>
+  <button onclick="document.getElementById('audio-guide').scrollIntoView({behavior:'smooth'})">Audio Guide</button>
+</div>
   <div class="right">
     <input type="text" placeholder="Search">
     <button>🌐</button>
@@ -318,6 +325,7 @@
 </div>
 
 <!-- Section 1: Video Background -->
+ <div class="video-section" id="video-section">
 <div class="video-section">
   <iframe src="https://player.vimeo.com/video/1121483340?background=1&autoplay=1&loop=1&byline=0&title=0"
     frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
@@ -330,11 +338,13 @@
     <div class="buttons">
       <button>Start Virtual Tour</button>
       <button>Explore Map</button>
+      </div>
     </div>
   </div>
 </div>
 
 <!-- Section 2: Sacred Sanctuaries -->
+ <section id="sanctuaries">
 <div class="section2">
   <h2>Sacred Sanctuaries</h2>
   <p class="subtitle">Explore the most revered monasteries of Sikkim, each holding centuries of spiritual wisdom and architectural marvels nestled in the Himalayan landscape.</p>
@@ -389,8 +399,10 @@
     </div>
   </div>
 </div>
+</section>
 
 <!-- Section 3: Explore Sacred Geography -->
+ <section id="map">
 <section class="bg-white py-12 text-black">
   <div class="text-center mb-12">
     <h2 class="text-4xl font-bold text-orange-600">
@@ -446,8 +458,10 @@
     </div>
   </div>
 </section>
+</section>
 
 <!-- Section 4: Sacred Calendar -->
+ <section id="calendar">
 <section class="py-16 px-6 bg-gray-50 text-black">
   <div class="text-center mb-12">
     <h2 class="text-4xl font-bold text-orange-600">Sacred Calendar</h2>
@@ -489,6 +503,7 @@
     </div>
   </div>
 </section>
+</section>
 
 <!-- Section 5: Digital Preservation -->
 <section class="py-16 px-6 bg-gray-50 text-black">
@@ -502,6 +517,7 @@
   </div>
 
   <!-- Archive Cards -->
+   <section class="digital-preservation" id="digital-preservation">
   <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
     <!-- Ancient Manuscripts -->
     <div class="bg-white rounded-2xl shadow p-6 text-center text-black">
@@ -566,8 +582,10 @@
     </div>
   </div>
 </section>
+</section>
 
 <!-- Section 6: Smart Audio Guide + Footer -->
+ <section id="audio-guide">
 <section class="py-16 px-6 bg-gray-50 text-black">
   <!-- Heading -->
   <div class="text-center mb-12">
@@ -688,7 +706,27 @@
       <span>Built with respect and reverence</span>
     </div>
   </div>
+  </section>
 </footer>
+
+<script>
+  const navbar = document.querySelector('.navbar');
+  const videoSection = document.getElementById('video-section');
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > videoSection.offsetHeight - 70) {
+      // Dark semi-transparent black
+      navbar.style.background = 'rgba(0, 0, 0, 0.85)';
+      navbar.style.color = '#fff'; // or black text if you prefer
+    } else {
+      navbar.style.background = 'transparent';
+      navbar.style.color = 'white';
+    }
+  });
+</script>
+
+
+
 
 </body>
 </html>
